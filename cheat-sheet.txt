@@ -1,0 +1,528 @@
+npx create-react-app my-app -> installs (first time) create-react-app toolchain 
+and creates a new React app called "my-app" as git repo with a .gitignore ready;
+npm init react-app my-app -> same thing as above but only available for npm 6+,
+while npx is available for npm 5.2+
+
+npm i --save radium -> installs the package radium and saves it to the dependencies
+npm i --save styled-components
+npm i --save axios
+npm i --save react-router-dom
+npm i --save lodash -> deep cloning objects efficiently
+npm i --save redux react-redux
+npm i --save redux-thunk
+installs the enzyme for testing; react-test-render for mounting components without
+depending on the DOM; --legacy-peer-deps for npm >= 7.0; last for React => 17.0  
+npm i --save enzyme react-test-renderer --legacy-peer-deps @wojtekmaj/enzyme-adapter-react-17
+npm i --save next react react-dom
+npm i --save redux-saga
+this is a package that uses an alternative to Redux and Contextapi for global state 
+management (might be the future of state management)
+npm i --save use-global-hook
+powerful and useful library to update the state immutably
+npm i --save immer
+
+node file.js -> executes the file using Node.js, we need to be in the same folder as the file
+
+npm start -> starts the dev server and launches the app
+npm test -> executes all the tests
+
+npm run build -> when is over and we are ready to deploy. Bundles and optimizes our app
+
+React.createElement('div', null, React.createElement('h1', null, 'Some text')) ->
+allows to create a React component inline, with a div and a nested h1
+
+import React, {Component} from 'react' -> necessary for class-based components
+
+https://react.rocks/ -> official website full of projects with respective code
+
+
+Theory:
+React is a JS library to build JS-driven web apps that run in the browser. Users
+don't need to wait for pages to reload
+
+React is all about components, making the code reusable and easier to scale and
+maintain
+
+React makes UI state management a lot easier; focus on Business logic (replacing JQquery);
+high performance and scalability
+
+With React we create SPA (single-page applications), only one HTML page and the
+content is rendered client-side; only one ReactDOM.render() call
+
+in default exports we can import them with the name we want and we dont use "{}";
+in named exports we need to import with "{exactnameofexportedvariable}". In 
+default we use the keyword "default"; in named exports we dont
+
+by assigning an arrow function as a property of a class instead of a method, the
+problem with keyword "this" goes away
+
+we dont need to use the "constructor()" when creating a class, simply variablename
+= value; super() also disappears
+
+rest operator "..." -> used to merge a list of function arguments into an array
+
+spread operator "..." is important otherwise we would be adding the array as a whole
+and not pulling out all its elements; this also works for objects
+
+destructuring != spread -> spread pulls out all elements/properties while destructuring
+pulls out single elements/properties
+
+[a] = array; {key} = {key: value} -> destructuring in arrays vs objects
+
+since objects and arrays in JS work by reference, to really copy their values we
+need to use the spread operator to do it in an immutable way, and not just copy
+the pointer. Re-assigning two objects or two arrays, we are just copying the
+reference
+
+In a React app we render the root component in index.js and then we nest every component
+inside the root component
+
+class components always need the render() method with return while functional
+components always need to return only
+
+JSX restrictions:
+if the component is not a functional arrow function component, the return needs
+"()" for multiple lines;
+all components can only return one parent element, the trick is to nested everything
+in a single "div" element, or return an array of JSX elements (which is basically, 
+an array of successive React.createElement calls), and each JSX element needs a key
+prop
+
+className is a special JSX attribute to style our components
+
+only the index.js file needs the React and React-DOM imports. This is only
+valid if we build our app only with functional components. If we use a class
+component, that component needs the React import
+
+functional components may receive props as arguments and we access them with
+props.anyname; in class components they dont receive as arguments and we access
+them with this.props.anyname. This are passed down to components in the parent
+components as HTML attributes; between the enclosing tags we access by props.children
+
+state, unlike props, happens inside the component not passed by a parent component;
+state = {} -> a JS object to manage state for class based components; this.state.anyname
+to access the property of the class;
+since state is a JS object works by reference, therefore, to change it (update), we
+need to change it immutably by calling "this.setState()" and passing to this
+function the new property value present in state
+
+any changes to state and/or props causes an UI update (rendering of the component)
+
+when using events we dont call a function with "()", we pass only the reference
+
+useState() -> a hook to manage state in functional components. useState always returns
+an array with exactly two elements, the current state and a function to update the
+state in an immutable way
+
+setState() in class components merges the new state with the old state -> we only
+need to specify the properties we want to change; useState() doesn't merge, it replaces
+the old state with the new state. if we want to keep some of the old properties, we
+need to specify by property: state.property
+
+we can also have multiple "useState()" calls if we want same properties of our state
+to remain unchanged. This way when we want to change some property of our state, we
+only need to worry about that property and change it
+
+on events if we want to pass arguments to a function, we declare an anonymous
+function, and its body will return our function with "(arg)". In this case
+our function is executed when the anonymous function is called, but the anonymous
+function itself is only a reference;
+this only works for arguments we have access to in the current scope, for those we
+dont have access (an event) we pass it as an argument to the anonymous function and
+to our function
+
+onChange is fired everytime the value in text field is changed
+
+by passing a function to a child component and then, in the parent component,
+receiving the event (in the child) as argument to the function, and in the child
+where is the event we specify a "value" HTML attribute we are doing two-way binding
+
+for dynamic content in JSX "{}" we can only write simple expressions, not block
+expressions
+
+{boolean ? JSX : null} -> conditional rendering but can be sub-optimal; it might be
+better to write a if/else statement outside of JSX and assign the HTML to a variable
+
+for outputing lists in React, the best way is to use ".map()" since it converts an
+JS array into an JSX array and returns this new array. Each most outer JSX element 
+being rendered in a list needs a unique key property, allowing React to efficiently
+re-render the list; .map() also offers an index of each element as a second arg
+
+state involing objects or array we should always change them immutably -> perform
+a copy of them to a variable using the spread operator
+
+style{styleobject} as an HTML attribute for a component -> iniline style
+
+HTML attribute className needs to be a string, hardcoded or dinamically, and the same
+name as our CSS classes
+
+Radium package makes it possible to use sudo selectors and media queries in inline
+style; we need to wrap our entire application with <StyleRoot>
+
+Radium needs to wrap our component -> export default Radium(Component)
+
+styled from styled-components returns React components depending on the HTML object
+we want to build -> styled.div` css styling ` returns a div
+
+with styled components, if we want to change a style based on a condition, we add
+a HTML attribute to the styled component (alt={the variable responsible for the condition}),
+and then in the styled component we inject JS expressions inside the ` ${props => props.alt ? :}`
+
+after react-scripts >= 2.0 we no longer need to npm run eject to support CSS modules,
+already suported. To use this new CSS modules we simply need to create the files 
+with the extension ".module.css"; also with react-scripts >= 2.0 typescript is already
+enabled, simple rename the files to ".ts" extension
+
+CSS modules are the prefered and best way since it keeps JS code separated from JSX
+code and still has the power of scope-styling our components like CSS
+
+we can debug our application directly in the browser -> F12 -> Sources -> navigate
+to the file -> place a breakpoint
+
+the componentDidCatch() method is invoked if some error occurs during the rendering 
+phase of any lifecycle methods or any children components. This method is used to 
+implement the Error Boundaries for the React application.
+
+best practice -> have as many presentational components as possible
+
+historically, managing state is for class-based components and presentation is for
+arrow function components
+
+historically anytime we needed to use LifeCycle hooks, we needed to create 
+class-based components, not avaible from functional components. With hooks,
+functional components can also have lifecycle hooks
+
+we might need to change the behaviour of useEffect. we may only want to fetch data
+when the component mounts for the first time or when some changes happen.
+for the first case we pass an empty array as second arg of useffect, for the second
+case we pass an array with the props/state that change;
+by returning a function in the main function of useffect, we can use this hook to
+clean up some events after the component is removed from the DOM. this cleanup work
+depends on the second argument of useEffect
+
+for performance optimization we can tweak shouldComponentUpdate to not re-render
+child components if only the parent component or other brother components update;
+if we need to check if all props of a component change, we extend PureComponent
+that already has a shouldComponentUpdate with checks for all props
+
+for performance optimization in functional components we use memoization ->
+React.memo(component). for this special case we need to import React 
+
+the render() method does not immediately updates the real DOM, it first compares the
+old virtual DOM that React creates with the re-rendered Virtual DOM and checks if
+there are any differences. If there are differences only updates the real DOM on
+those differences. This approach is greate because accessing the real DOM is really
+slow
+
+in Windows we can not create an Aux.js file, needs to be Auxiliary.js; this is a
+high order component used to wrap our components; React already has one built-in
+called React.Fragment. Only purpose is to avoid an extra <div> to be rendered into
+the DOM
+
+it is a convention to name HOC with "With" at the start
+
+whe we create a HOC that will wrap a component and add some additional logic, like
+the withClass example, we want to export the wrapped component with withClass,
+the component props are not propagated. In the withClass file we need to use the
+spread operator and pull the props and pass them down
+
+setState is not guaranteed to execute synchronously. When the state does not depend
+on the previous state, useState({stateObject}) is perfectly fine, when it depends
+on the previous state, useState must receive an arrow funtionsthat takes two args 
+(prevState and props) that returns the state object
+
+PropTypes really good to check the types of props and see if we are passing the
+correct props to our components. Works in both class and functional components
+
+on any JSX element (div, p, h1..) we can use the special "ref" keyword to select 
+a specific element in the DOM. Refs are used together with componentDidMount;
+React.createRef() is the modern approach
+
+for functional components we use "useRef" for refs, in this case refs are used with
+useEffect
+
+the context API solves the prop chain problem -> when we want to pass props to one
+or multiple components at lower levels in the tree from a top component, and the
+components in between don't need to know these props. We need React.createContext();
+AuthContext.Consumer doesnt take JSX elements as children but a JS function with an
+"context" arg provided but Context and executed automatically
+
+to be able to use the context in a component outside the render/JSX code, we use
+"static contextType = AuthContext"; for functional components since we cant use a
+static property we use the "useContext(AuthContext)" hook
+
+ContextAPI is better explained in the "replace-redux" project. Context is great for low
+frequency updates, but for high frequency updates Redux is the way to go due to performance
+issues
+
+two ways to transform an Object to an array -> Object.keys() or Object.values();
+Array(length) returns an object and not an array
+
+flat() -> flattens the array of arrays into a single array. Substitutes reduce() +
+concat()
+
+when the HTML is a button, disabled is a reserved keyword that disables the button
+and not a prop
+
+in the Modal case, it can't be just an If condition to make the Modal render or not
+since we have a transition property in the .css of the Modal, to make it appear
+in a special way. In these cases, we use the special HTML "show" attribute
+
+to use multiple CSS styles at once, we need to create an array and each element of
+that array is an element of CSS modules classes object, and at the end we use
+".join(' ')" to create an array of strings
+
+we should always import a ".png/.jpeg/etc" in our JS file to make webpack aware of it,
+instead of simply placing the location in the src HTML attribute
+
+for props that are boolean we just need to pass the prop no need for -> prop={value}
+
+in SPA, typically, when reaching out to the web it's JSON data that is exchanged and
+not HTML pages
+
+best way to make HTTP requests with React -> axios. Axios GitHub page for configuration
+
+axios.get() returns a Promise because HTTP requests work asynchronously. After get()
+is finished, whenever it is finished, we use .then() to get the data inside that
+Promise; since axios works with Promises and they are asynchronous, any time we want
+to fetch data and store or change it, we need to do it inside the .then() method,
+because it is when .then() is executed we know for sure the Promise already fetched
+the data
+
+there are two ways to limit the amount of data fetched from a server -> send query
+params to limit that amount, if the API supports; get the whole data and transform it
+to our needs in the JS code. All in the .then() method
+
+with axios we can also edit the data fetch in the .then() method
+
+when using setState() inside componentDidUpdate it usually leads to an infinite loop,
+when dealing with Promises
+
+interceptors -> useful when we want to handle errors globally (any time a HTTP request
+is sent in any component), or on a authentication header; axios.interceptors.request
+in index.js
+
+interceptors main idea is to configure/edit our application's HTTP requests
+
+to remove an interceptor simply store it in a variable and later use eject(interceptor)
+
+when using Firebase any HTTP request needs to be -> 'anynode/endpoint.json'
+
+since it is normal to fetch data when a component loads/mounts, conditions in render()
+that depend on that data will fail, because axios is asynchronous and the data
+wont be available when render() is called, as soon as the component mounts
+
+to avoid problems with "withErrorHandler" components on componentDidMount, it's better
+to handle the HTTP requests in the constructor instead of componentDidMount/compo-
+nentWillMount. This because, componentDidMount is only called after all the child
+components are rendered
+
+it is always good to remove "dead" interceptors used in a single component when this
+unmounts. For thise we use componentWillUnmount or useEffect (clean-up work). This
+prevents memory leaks
+
+routing setup can be done either in index.js or App.js
+
+in routing, the folder structure should be according to the pages we want to 
+render -> sub-folders, each per page, under the folder of the main component; in
+this main component we use <Route path='/somepath' exact render={JSX}/>, without
+exact the Route check if current path starts with attribute path, with exact the
+Route checks if current path is exactly the path in attribute path
+
+for Route to render a component instead of plain JSX we use component and not render;
+components are actually removed and added to the DOM, hence, causing consecutive
+re-renders; if we want to pass props inside a <Route/> we use render with an arrow
+function that returns de component. when we do this the component loses the routing
+props, there are two ways -> withRouter(Component) or we pass props to the arrow
+function and then in the component JSX we spread them
+
+to prevent the reloading of the anchor tags (<a>) we use <Link/>; if we append '#'
+we jump to any div containing the name after the '#'; search, as a property of
+<Link/> to attribute, allows us to add query params
+
+the routing props provided by <Route/> (history, location and match) are not 
+passed down in the tree to the children. There are two ways for the children, that
+are not a routing page in our application, to get these props -> {...props.history}
+for example or, using the HOC withRouter
+
+<Link/> builds absolute paths (always appending pathname to the root). If we want to
+chain a path we take advantadge of the this.props.match.url to get the current path
+and append the pathname we want
+
+<NavLink/> is the as <Link/> but we can add styling
+
+this.props.match.params.id -> access params via routing, this gives the id as 
+a string. We can convert a string to a number by pre-pending a "+"
+
+this.props.history.push('path') -> navigate programatically
+this.props.match.path
+
+<Redirect/> needs to be inside the <Switch/> otherwise we cant specify the 
+"from" attribute; <Redirect/> conditionally only needs the "to" attribute
+
+history.push() has the same behaviour as <Redirect/>, but since it pushes a new
+route to the stack we can go back, while <Redirect/> replaces the current route
+and we can't then go back; instead we can use history.replace()
+
+Guards are used to prevent the user from seeing certain pages if he isnt
+authenticated; it can be used as a ternary rendering condition to prevent the
+routing or, in the guarded component, in the componentDidMount() we use history.replace
+to go a different page
+
+Guards + <Redirect/> is a way to handle 404 errors (unknown routes); other way is
+to use a <Route render={}/> as a default case of the <Switch/>
+
+Lazy loading serves to not load all the components from, import Component from '',
+to the webpack bundle, instead, the component will be efectively loaded once
+needed. Check example in the posts project with the asyncComponent.js
+
+in React >= 16.6, lazy loading is implement by React Suspense. Only works with
+default exports. Doesnt need to be in a routing scenario, and doesnt work in a 
+server-side rendering scenario
+
+when serving our app in a sub-directory other then '/' we need to specify it with
+the prop 'basename' in <BrowserRouter/>
+
+when using forms, the handler for submitting it shouldnt be in the <button> as a
+click event but in the <form> as onSubmit
+
+in Redux there is only one rootReducer, even if we have multiple reducers they get
+merged; the update of the state by the reducer must be immutable
+
+store.getState() -> returns the state in the store; 
+store.dispatch({type: '', anyprop: value}) -> how to dispatch an action
+store.subscribe(()=>{}) -> executes when the state is updated/when an action
+reaches the reducer
+
+once we connect a component to the Redux store, the state being managed by the
+reducers is now mapped as props in our components
+
+we can dispatch actions not handled in the reducer, it does not throw any error
+
+for a shallow copy(not deep cloning) of an object we can use ... or Object.assign({}, obj) 
+
+when we want to update an array immutably we can use concat() instead of push(). This
+also avoids the need to do a deep cloning of the object; to remove elements of an
+array immutably we can use filter(); splice() can be use for both insertions and
+removals in arrays, in a immutable way
+
+when we have multiple reducers and we combine them, Redux adds an extra level of
+nesting to avoid naming conflicts. Now in mapStateToProps, to access our state,
+we need to chain the key of the reducers in index.js, to our state
+
+each reducer only has access to its local state, so when using multiple reducers
+and one needs the state of the other, this reducer needs to access the global state.
+To do that, the global state needs to dispatched to an action
+
+in the case our <App> is already being wrapped by another component, the <Provider>
+from redux should be at the most top level; in the case our component is already
+being wrapped by a hoc, like withErrorHandler, as long as this hoc is spreading
+the props to our component, the connect should work fine
+
+even though the reducers only run synchronous code, we can add middleware between
+our actions and our reducer so Redux can handle asynchronous code. This is achieved
+with applyMiddleware(list of functions) and is passed as a second arg to createStore
+
+action creators are useful for async code in redux but can be used for sync code
+as well
+
+the middleware to handle async code is called Thunk. Redux Thunk, in the action
+creators, instead of dispatching an action directly, returns a function that will
+eventually dispatch an action
+
+we can do data transformation in both the action creators and the reducer. The best
+practice is to do it in the reducer; redux thunk allows us to reach the store state
+prior the dispatch to the reducer. It shouldnt be used too much
+
+mapStateToProps and mapDispatchToProps must always return a JS object 
+
+in SPA the Authentication is all sending auth data to the server, and receiving a Token (JS
+object) instead of a Session. This Token can be stored in the localStorage in the browser or
+in the Redux store. The latter causes the user to lose the Token whenver he refreshes the page.
+
+refreshTokens are necessary so the token doesnt expire within the limited time
+
+when working with new Date() times calculations, no need to convert to number
+
+If the API allows it, every HTTP request we can exchange our token for an ID token for security
+reasons
+
+by protecting the server by this not sending any data to not authenticated users, theres no
+way to dig into our code
+
+with Firebase is super easy to fetch data by filtering by some criteria -> orderBy="criteria" queryParam
+in the HTTP request. Check example in the orders.js actions file
+
+Test Driven Development (TDD) -> writing the tests before any code; Test Runner -> runs the testing code
+and validates it (Jest already comes in cra and is often use in React apps); Testing 
+utilities -> Simulate the React App tree so the components can be mounted and tested 
+individually (Enzyme)
+
+one of the most useful and best to use functionalities of Enzyme is the "shallow" function.
+Components that are mounted. dont mount nor run their children. This is important to run
+isolated tests.
+
+to test containers, besides default exporting at the bottom, we need to export at the top
+before "class" when our container is connected to Redux. Don't forget when connected to Redux
+everything, method and props, are all seen as props. So, when testing, with "setProps()" all
+props during the execution trait need to be passed (this is more for the function case)
+
+when testing code in the Redux, namely the reducers, we dont need Enzyme because no components
+will need to be mounted
+
+NextJS helps in the Server Side Rendering (SSR) of React applications
+
+in NextJS our routes will be React components and must be placed under the "pages" folder to
+be parsed automatically under the hood, lazy loading is already performed as well. These 
+components (the routes) are usually functional components
+
+NextJS uses has its own way of scoping styling -> check nextjs project
+
+NextJS uses a hook called "getInitialProps" that is the same as "componentDidMount" to cause
+server side effects, fetch data and pre-propulate for example. Better check full Doc website
+
+Redux-Saga is an alternative to Redux-Thunk; it uses generators that are basically iterators
+that execute code incrementally and are great for async/await code. Generators can only be
+written like "function* name(arg) {}". In generators we use the yield keyword that should be
+used in every step of the generator. This ensures that the code is run incrementally, and in 
+the case of async code it waits for previous steps to finish
+
+In sagas we always get an "action" argument, and the "yield" keyword only makes sense for
+async code but it can be use for sync code
+
+to test generatos we should use the "call()" funtion from "redux-saga/effects"; "all()" is
+useful to run multiple actions in parallel; "takeLatest()" cancels all other triggers for an
+action, and only executes the latest
+
+Rules about hooks: we can only use hooks at the root level of our functional component; they
+cannot be used inside functions nor if/else statements; but can be used inside other hooks
+
+useCallback() can be useful to prevent infinite loops when we are trying to fetch data on
+component initial mounting. useCallback(entirefunctionwrapped) caches the function and uses
+this on the next rendering cycle of the component. If the function tries to fecth data,
+useCallback() will cache that data fetched, and consequently useEffect() wont need to run again.
+
+React uses State Batching -> when two or more useState/setState are used together in the same
+function/block, they are executed synchronously but each update wont cause a re-render cycle.
+React executes all of them synchronously and at the end it batches/bundles them all together
+to cause only one re-render cycle.
+
+When we have state that depends on previous state or we handle different sub-states that are
+kinda related, it's better to use "useReducer()". It can be used like this:
+const [state, dispatch] = useReducer(ourreducerfunction, initialStateforthereducerfunction);
+the reducer function takes two args (currentState, actionobject) and must always return the
+updated state
+
+React will re-render the component whenever our reducerFuntion returns the new state
+
+we can create our custom hooks and use react hooks inside. Our hooks must start with "use"
+and any component that uses our custom hook with useState() inside, will cause a re-render.
+In this specific case the React.memo() optimization won't work, perhaps adding an argument
+called (shouldListen) tou our hook and only changing, in the useEffect or useState, if the
+argument is set to true; Custom hooks are used to share stateful logic across components
+
+useSelector() is a hook that replaces the mapStateToProps, it receives a function with state
+as argument and then we can extract the piece of the store state we want. useDispatch() is a
+hook that replaces mapDispatchToProps, it returns the dispatch() function of Redux and this
+function then receives the exported action as argument. With these two hooks, theres no need
+to connect() our component

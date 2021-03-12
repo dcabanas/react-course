@@ -1,0 +1,6 @@
+export const INCREMENT = 'INC'
+export const DECREMENT = 'DEC'
+export const ADD = 'ADD'
+export const SUBTRACT = 'SUBTRACT'
+export const STORE_RESULT = 'RESULT'
+export const DEL_RESULT = 'DEL'
