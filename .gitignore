@@ -1,2 +1,11 @@
 node_modules/
 .next/
+/.idea/.gitignore
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/jsLinters/eslint.xml
+/.idea/modules.xml
+/hooks/package-lock.json
+/package-lock.json
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/react-course.iml
+/.idea/vcs.xml
